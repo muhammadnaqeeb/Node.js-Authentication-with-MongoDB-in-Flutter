@@ -1,6 +1,7 @@
 // importing
 const express = require("express");
 const mongoose = require("mongoose");
+const authRouter = require("./routes/auth");
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,6 +11,7 @@ const app = express();
 // middleware, this basically make shore that whatever request 
 // which is coming to our server get passed in json format
 app.use(express.json());
+app.use(authRouter);
 
 const DB = "mongodb+srv://naqeeb:Naqeeb410.@cluster0.nwzebzg.mongodb.net/?retryWrites=true&w=majority";
 
