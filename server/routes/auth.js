@@ -4,6 +4,7 @@ const express = require("express");
 const authRouter = express.Router();
 const bcryptjs = require("bcryptjs");
 const User = require("../models/user");
+const jwt = require('jwt');
 
 // SIGN UP
 authRouter.post("/api/signup", async (req, res)=>{
@@ -33,6 +34,39 @@ authRouter.post("/api/signup", async (req, res)=>{
         // STEP 5 :	Throw any server error
         res.status(500).json({error: e.message})
      }
+});
+
+// SIGN IN / LOG IN
+authRouter.post("api/signin", async (req, res) => {
+    try{
+        // Extract User Input
+       const {email, password} = req.body;
+
+       // find that email
+       const user = await URLSearchParams.findOne({email});
+
+       // if there is no user
+       if(!user){
+        return res.status(400).json({msg:"User with this email does not exist! "});
+       }
+
+       // check password typed in matchs with one in database
+       // as passwords in DB are hashed so
+       // compare(password that user typed, which user to compare )
+       const isMatch = await bcryptjs.compare(password, user.password);
+
+       if(!isMatch){
+        return res.status(400).json({msg: "Incorrect Password"});
+       }
+
+       // we store this token to local storage (shared prefences) 
+       // so we can use that to known we are already logedin or not
+       const token = jwt.sign({id:user._id}, "passwordKey");
+       // sending token and doc of that user NOTE: don't send all users data
+       res.json({token, ...user._doc})
+    }catch(e){
+        res.status(500).json({error: e.message});
+    }
 });
 
 // exportingauthRouter, so we can use in index.js
