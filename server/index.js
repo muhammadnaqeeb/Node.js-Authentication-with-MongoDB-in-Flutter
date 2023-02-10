@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(authRouter);
 
-const DB = "mongodb+srv://naqeeb:Naqeeb410.@cluster0.nwzebzg.mongodb.net/?retryWrites=true&w=majority";
+const DB = "mongodb://naqeeb:Naqeeb410.@ac-vcbmo23-shard-00-00.nwzebzg.mongodb.net:27017,ac-vcbmo23-shard-00-01.nwzebzg.mongodb.net:27017,ac-vcbmo23-shard-00-02.nwzebzg.mongodb.net:27017/?ssl=true&replicaSet=atlas-nyq25d-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 // connecting to database
 mongoose.connect(DB).then(()=>{
