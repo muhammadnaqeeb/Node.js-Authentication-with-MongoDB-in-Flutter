@@ -1,4 +1,5 @@
 import 'package:authentication_using_nodejs/screens/login_screen.dart';
+import 'package:authentication_using_nodejs/services/auth_services.dart';
 import 'package:authentication_using_nodejs/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +12,18 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController nameController = TextEditingController();
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  // create instance of auth service class
+  final AuthService authService = AuthService();
+
+  void signupUser() {
+    authService.signUpUser(
+        context: context,
+        email: emailController.text,
+        password: passwordController.text,
+        name: nameController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 Size(MediaQuery.of(context).size.width / 2.5, 50),
               ),
             ),
-            onPressed: () {},
+            onPressed: signupUser,
             child: const Text("Signup"),
           ),
           const SizedBox(
