@@ -37,13 +37,13 @@ authRouter.post("/api/signup", async (req, res)=>{
 });
 
 // SIGN IN / LOG IN
-authRouter.post("api/signin", async (req, res) => {
+authRouter.post("/api/signin", async (req, res) => {
     try{
         // Extract User Input
        const {email, password} = req.body;
 
        // find that email
-       const user = await URLSearchParams.findOne({email});
+       const user = await User.findOne({email});
 
        // if there is no user
        if(!user){

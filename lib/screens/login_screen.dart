@@ -1,3 +1,4 @@
+import 'package:authentication_using_nodejs/services/auth_services.dart';
 import 'package:authentication_using_nodejs/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void loginUser() {}
+  final AuthService authService = AuthService();
+  void loginUser() {
+    authService.signInUser(
+        context: context,
+        email: emailController.text,
+        password: passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 20,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: loginUser,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
               minimumSize: MaterialStateProperty.all(
