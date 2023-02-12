@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:authentication_using_nodejs/models/user.dart';
 import 'package:authentication_using_nodejs/providers/user_provider.dart';
 import 'package:authentication_using_nodejs/screens/home_screen.dart';
+import 'package:authentication_using_nodejs/screens/signup_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -122,5 +123,17 @@ class AuthService {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+  // SIGN OUT
+  void signOut(BuildContext context) async {
+    final navigator = Navigator.of(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("x-auth-token", "");
+    navigator.pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const SignupScreen(),
+        ),
+        (route) => false);
   }
 }
